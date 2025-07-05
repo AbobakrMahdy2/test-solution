@@ -1,12 +1,12 @@
-﻿#include <iostream>
+#include <iostream>
 #include <vector>
 using namespace std;
 
 class Time{
+public:
     int year;
     int month;
     int day;
-public:
     Time(){};
     Time(int year,int month,int day){
         this->year=year;
@@ -27,14 +27,14 @@ public:
 };
 
 class Product{
-     string name;
-     int price;
-     int quantity;
-     bool is_expire;
-     Time expire_date;
-     bool shipping;
-     int weight;
 public:
+    string name;
+    int price;
+    int quantity;
+    bool is_expire;
+    Time expire_date;
+    bool shipping;
+    int weight;
      Product(){};
      Product(string name,int price,int quantity,bool is_expire,Time expire_date,bool shipping,int weight){
 
@@ -50,18 +50,18 @@ public:
 
 };
 class CartItem{
+public:
     Product p;
     int quantity;
-public:
     CartItem(Product pro,int q){
         p=pro;
         quantity=q;
     }
 };
 class Cart{
-    vector<CartItem>products;
-
 public:
+
+    vector<CartItem>products;
     void add(Product pro,int q){
         products.push_back({pro, q});
     }
@@ -69,8 +69,8 @@ public:
 };
 
 class Customer{
-    int balance;
 public:
+    int balance;
     Customer(){}
     Customer(int b){
         balance=b;
@@ -79,7 +79,11 @@ public:
 };
 
 void checkout(Customer c,Cart cart){
+    cout<<"** Shipment notice **\n";
+    for (auto e:cart.products) {
 
+        if (e.quantity>e.p.quantity&&(!e.p.is_expire||Time().is_expired(e.p.expire_date)))cout<<e.quantity<<"x "<<e.p.name<<"     "<<e.p.weight<<"\n";
+    }
 }
 
 int main(){
